@@ -1,10 +1,9 @@
 package mx.edu.ittepic.marcos.tpdm_u4_examen_aluminati;
 
 import android.graphics.Canvas;
-<<<<<<< HEAD
 import android.graphics.Color;
-=======
->>>>>>> 7a35764fc07b0d95f973ab59de0adc257ed70f83
+
+
 import android.graphics.Paint;
 
 public class Linea {
@@ -55,7 +54,7 @@ public class Linea {
     public void setPosYfinal(int posYfinal) {
         this.posYfinal = posYfinal;
     }
-<<<<<<< HEAD
+
 
     public void BorrarLines(Canvas c,int toqueX, int toqueY,Paint p){
         if((toqueX >=posXorigen && toqueX<=posXfinal) || (toqueX <=posXorigen && toqueX>=posXfinal)){
@@ -67,6 +66,6 @@ public class Linea {
         }
 
     }
-=======
->>>>>>> 7a35764fc07b0d95f973ab59de0adc257ed70f83
+
+
 }

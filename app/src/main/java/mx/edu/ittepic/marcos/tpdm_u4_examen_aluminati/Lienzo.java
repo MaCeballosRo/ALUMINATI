@@ -7,9 +7,9 @@ import android.view.MotionEvent;
 import android.view.View;
 
 public class Lienzo extends View {
-    Compuertas not, or, and, xor, bombillaEncendida,bombillaApagada,botonApagado,botonEncendido, punteroCompuerta, punteroBoton,punteroBombilla;
+    Compuertas not, or, and, xor, bombillaEncendida,bombillaApagada,SegundobotonApagado,SegundobotonEncendido,botonApagado,botonEncendido, punteroCompuerta, segundoPunteroBoton ,punteroBoton,punteroBombilla;
     int nivel;
-    int boton;
+    int boton,boton2;
     int ancho = this.getResources().getDisplayMetrics().widthPixels;
     int alto = this.getResources().getDisplayMetrics().heightPixels;
     int area, aux,xInicial,yInicial, xFinal, yFinal;
@@ -29,7 +29,10 @@ public class Lienzo extends View {
         bombillaEncendida = new Compuertas(this,R.drawable.bombilla1);
         botonApagado = new Compuertas(this,R.drawable.boton1);
         botonEncendido = new Compuertas (this,R.drawable.boton);
+        SegundobotonApagado = new Compuertas(this,R.drawable.boton1);
+        SegundobotonEncendido = new Compuertas (this,R.drawable.boton);
         boton = 0;
+        boton2 =0;
     }
 
     public void setNivel(int nivel){
@@ -42,6 +45,11 @@ public class Lienzo extends View {
             punteroBoton = botonApagado;
         }
         else punteroBoton = botonEncendido;
+
+        if (boton2==0){
+            segundoPunteroBoton = SegundobotonApagado;
+        }
+        else {segundoPunteroBoton=SegundobotonEncendido;}
 
         switch(nivel){
             case 1://nivel 1
@@ -58,10 +66,11 @@ public class Lienzo extends View {
                 }
                 break;
             case 2: //nivel 2
-<<<<<<< HEAD
+
                 bombillaApagada.pintar(c,p,ancho/2-50,115);
                 and.pintar(c,p,ancho/2-50,alto/3);
-                punteroBoton.pintar(c,p,ancho/2-50,2*alto/3);
+                punteroBoton.pintar(c,p,ancho/2-400,2*alto/3);
+                segundoPunteroBoton.pintar(c,p,ancho/2+100,2*alto/3);
                 punteroCompuerta = and;
                 punteroBombilla = bombillaEncendida;
 
@@ -69,25 +78,20 @@ public class Lienzo extends View {
             case 3://nivel 3
                 bombillaApagada.pintar(c,p,ancho/2-50,115);
                 or.pintar(c,p,ancho/2-50,alto/3);
-                punteroBoton.pintar(c,p,ancho/2-50,2*alto/3);
+                punteroBoton.pintar(c,p,ancho/2-400,2*alto/3);
+                segundoPunteroBoton.pintar(c,p,ancho/2+100,2*alto/3);
                 punteroCompuerta = or;
                 punteroBombilla = bombillaEncendida;
                 break;
             case 4: //nivel 4
                 bombillaApagada.pintar(c,p,ancho/2-50,115);
                 xor.pintar(c,p,ancho/2-50,alto/3);
-                punteroBoton.pintar(c,p,ancho/2-50,2*alto/3);
+                punteroBoton.pintar(c,p,ancho/2-400,2*alto/3);
+                segundoPunteroBoton.pintar(c,p,ancho/2+100,2*alto/3);
                 punteroCompuerta = xor;
-                punteroBombilla = bombillaEncendida;
-=======
+
                 break;
-            case 3://nivel 3
-                break;
-            case 4: //nivel 4
->>>>>>> 7a35764fc07b0d95f973ab59de0adc257ed70f83
-                break;
-            case 5: //nivel 4
-                break;
+
 
         }
     }
@@ -123,10 +127,18 @@ public class Lienzo extends View {
                     punteroAux = 1;
                 }
                 if(punteroBoton.estaEnArea(posx,posy,punteroAux)!=0){
-                    if(punteroBoton == botonEncendido){
-                        boton = 0;
+                if(punteroBoton == botonEncendido){
+                    boton = 0;
+                }else {
+                    boton = 1;
+                }
+
+            }
+                if(segundoPunteroBoton.estaEnArea(posx,posy,punteroAux)!=0){
+                    if(segundoPunteroBoton == SegundobotonEncendido){
+                        boton2 = 0;
                     }else {
-                        boton = 1;
+                        boton2 = 1;
                     }
 
                 }
