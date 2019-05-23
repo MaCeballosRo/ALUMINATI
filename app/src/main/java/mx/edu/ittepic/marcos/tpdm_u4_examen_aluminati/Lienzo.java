@@ -58,6 +58,7 @@ public class Lienzo extends View {
                 }
                 break;
             case 2: //nivel 2
+<<<<<<< HEAD
                 bombillaApagada.pintar(c,p,ancho/2-50,115);
                 and.pintar(c,p,ancho/2-50,alto/3);
                 punteroBoton.pintar(c,p,ancho/2-50,2*alto/3);
@@ -78,6 +79,12 @@ public class Lienzo extends View {
                 punteroBoton.pintar(c,p,ancho/2-50,2*alto/3);
                 punteroCompuerta = xor;
                 punteroBombilla = bombillaEncendida;
+=======
+                break;
+            case 3://nivel 3
+                break;
+            case 4: //nivel 4
+>>>>>>> 7a35764fc07b0d95f973ab59de0adc257ed70f83
                 break;
             case 5: //nivel 4
                 break;
