@@ -5,6 +5,8 @@ import android.graphics.Paint;
 
 public class Linea {
     int posXorigen,posYorigen,posXfinal,posYfinal;
+    boolean valor;
+    String origen,destino;
 
     public Linea(int initX,int initY,int endX,int endY){
         posXorigen=initX;
@@ -50,5 +52,28 @@ public class Linea {
 
     public void setPosYfinal(int posYfinal) {
         this.posYfinal = posYfinal;
+    }
+
+    public void setValor(boolean v){
+        valor = v;
+    }
+    public boolean getValor(){
+        return valor;
+    }
+
+    public void setOrigen(String o){
+        origen = o;
+    }
+
+    public String getOrigen(){
+        return origen;
+    }
+
+    public void setDestino(String d){
+        destino = d;
+    }
+
+    public String getDestino(){
+        return destino;
     }
 }
