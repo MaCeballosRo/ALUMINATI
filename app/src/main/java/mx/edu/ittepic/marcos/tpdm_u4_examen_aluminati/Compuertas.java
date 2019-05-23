@@ -9,9 +9,13 @@ import android.graphics.Paint;
 public class Compuertas {
     Bitmap compuerta;
     int x,y;
+    int linea;
+    boolean conexion;
 
     public Compuertas(Lienzo lienzo,int compuerta){
         this.compuerta = BitmapFactory.decodeResource(lienzo.getResources(),compuerta);
+        linea = -1;
+        conexion = false;
 
     }
 
@@ -83,5 +87,21 @@ public class Compuertas {
 
     public boolean resultadoNot (boolean entrada){
         return !entrada;
+    }
+
+    public void setLinea(int linea){
+        this.linea = linea;
+    }
+
+    public int getLinea(){
+        return linea;
+    }
+
+    public void setConexion(boolean x){
+        conexion = x;
+    }
+
+    public boolean getConexion(){
+        return conexion;
     }
 }

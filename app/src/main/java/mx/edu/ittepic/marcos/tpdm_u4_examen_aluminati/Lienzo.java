@@ -9,7 +9,11 @@ import android.view.View;
 public class Lienzo extends View {
     Compuertas not, or, and, xor, bombillaEncendida,bombillaApagada,SegundobotonApagado,SegundobotonEncendido,botonApagado,botonEncendido, punteroCompuerta, segundoPunteroBoton ,punteroBoton,punteroBombilla;
     int nivel;
+<<<<<<< HEAD
     int boton,boton2;
+=======
+    int boton, bombillo;
+>>>>>>> 7f92d5398b35ed108136ca3461fe2775aca526a3
     int ancho = this.getResources().getDisplayMetrics().widthPixels;
     int alto = this.getResources().getDisplayMetrics().heightPixels;
     int area, aux,xInicial,yInicial, xFinal, yFinal;
@@ -17,7 +21,8 @@ public class Lienzo extends View {
     Linea[] lineas = new Linea[30];
     int[] coordenadas;
     int[] coordenadas1;
-    String origen;
+    String origen,destino;
+    boolean resultado;
 
     public Lienzo (Context context){
         super(context);
@@ -32,7 +37,12 @@ public class Lienzo extends View {
         SegundobotonApagado = new Compuertas(this,R.drawable.boton1);
         SegundobotonEncendido = new Compuertas (this,R.drawable.boton);
         boton = 0;
+<<<<<<< HEAD
         boton2 =0;
+=======
+        bombillo = 0;
+        resultado = false;
+>>>>>>> 7f92d5398b35ed108136ca3461fe2775aca526a3
     }
 
     public void setNivel(int nivel){
@@ -46,20 +56,28 @@ public class Lienzo extends View {
         }
         else punteroBoton = botonEncendido;
 
+<<<<<<< HEAD
         if (boton2==0){
             segundoPunteroBoton = SegundobotonApagado;
         }
         else {segundoPunteroBoton=SegundobotonEncendido;}
+=======
+        if(bombillo == 0){
+            punteroBombilla = bombillaApagada;
+        }else punteroBombilla = bombillaEncendida;
+>>>>>>> 7f92d5398b35ed108136ca3461fe2775aca526a3
 
         switch(nivel){
             case 1://nivel 1
-                //bombillaApagada.pintar(c,p,ancho/2-30,115);
-                //bombillaEncendida.pintar(c,p,50,50);
-                bombillaApagada.pintar(c,p,ancho/2-50,115);
+                if(punteroBombilla == bombillaApagada){
+                    punteroBombilla.pintar(c,p,ancho/2-50,115);
+                }else{
+                    punteroBombilla.pintar(c,p,ancho/2-50,50);
+                }
+
                 not.pintar(c,p,ancho/2-50,alto/3);
                 punteroBoton.pintar(c,p,ancho/2-50,2*alto/3);
                 punteroCompuerta = not;
-                punteroBombilla = bombillaApagada;
 
                 for(int i = 0; i<aux; i++){
                     lineas[i].Dibujar(c,p);
@@ -108,7 +126,6 @@ public class Lienzo extends View {
                 if(punteroBoton.estaEnArea(posx,posy,punteroAux)!=0){
                     coordenadas1 = coordenadaSalida(punteroBoton);
                     origen ="boton";
-
                 }
                 if(punteroCompuerta.estaEnArea(posx,posy,punteroAux)==3){
                     coordenadas1 = coordenadaSalida(punteroCompuerta);
@@ -127,6 +144,7 @@ public class Lienzo extends View {
                     punteroAux = 1;
                 }
                 if(punteroBoton.estaEnArea(posx,posy,punteroAux)!=0){
+<<<<<<< HEAD
                 if(punteroBoton == botonEncendido){
                     boton = 0;
                 }else {
@@ -139,6 +157,22 @@ public class Lienzo extends View {
                         boton2 = 0;
                     }else {
                         boton2 = 1;
+=======
+                    if(punteroBoton == botonEncendido){
+                        boton = 0;
+                        if(punteroBoton.getLinea()!=-1){
+                            lineas[punteroBoton.getLinea()].setValor(false);
+                        }
+                    }else {
+                        boton = 1;
+                        if(punteroBoton.getLinea()!=-1){
+                            lineas[punteroBoton.getLinea()].setValor(true);
+
+                        }
+                    }
+                    if(punteroCompuerta.getLinea()!=-1){
+                        prenderBombillo();
+>>>>>>> 7f92d5398b35ed108136ca3461fe2775aca526a3
                     }
 
                 }
@@ -146,6 +180,7 @@ public class Lienzo extends View {
                 if(area!=0 && origen.equals("boton")){
                     if(area == 4){
                         coordenadas1 = coordenada1Entrada(punteroCompuerta);
+                        destino = "1entrada";
 
                     }else{
                         if(area !=3) {
@@ -155,20 +190,58 @@ public class Lienzo extends View {
                 }else{
                     if(punteroBombilla.estaEnArea(posx,posy,punteroAux) !=0 && origen.equals("compuerta")){
                         coordenadas1 = coordenada1Entrada(punteroBombilla);
+                        destino = "bombilla";
                     }
                 }
 
                 if(coordenadas1 != null){
                     xFinal = coordenadas1[0];
                     yFinal = coordenadas1[1];
-                    lineas[aux]= new Linea(xInicial,yInicial,xFinal,yFinal);
-                    aux++;
+
+                    if(origen.equals("boton")){
+                        if(!punteroBoton.getConexion()){
+                            lineas[aux]= new Linea(xInicial,yInicial,xFinal,yFinal);
+                            punteroBoton.setLinea(aux);
+                            punteroBoton.setConexion(true);
+                            if(punteroBoton==botonApagado){
+                                lineas[aux].setValor(false);
+                            }else{
+                                lineas[aux].setValor(true);
+                            }
+                            prenderBombillo();
+                            aux++;
+                        }
+                    }
+                    if(destino.equals("bombilla")){
+                        if(!punteroBombilla.getConexion()){
+                            lineas[aux]= new Linea(xInicial,yInicial,xFinal,yFinal);
+                            punteroBombilla.setLinea(aux);
+                            punteroBombilla.setConexion(true);
+                            prenderBombillo();
+                            //lineas[aux].setValor(prenderBombillo());
+                            aux++;
+                        }
+                    }
+                    origen.equals("");
+                    destino.equals("");
                 }
 
                 break;
         }
         invalidate();
         return true;
+    }
+
+    private void prenderBombillo(){
+        if(punteroBombilla.getLinea()!=-1){
+            resultado = punteroBombilla.resultadoNot(lineas[punteroBoton.getLinea()].getValor());
+        }
+
+        if(resultado){
+            bombillo = 1;
+        }else{
+            bombillo = 0;
+        }
     }
 
     private int[] coordenadas2Entradas(Compuertas puntero){
@@ -178,8 +251,10 @@ public class Lienzo extends View {
         int ydFinal = puntero.y + puntero.getHeight();
         if(area == 1){
             coordenadas = new int[]{xiFinal,yiFinal};
+            destino ="entradaI";
         }else {
             coordenadas = new int[]{xdFinal,ydFinal};
+            destino = "entradaD";
         }
         return coordenadas;
     }
