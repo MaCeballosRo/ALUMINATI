@@ -14,8 +14,8 @@ public class Compuertas {
 
     public Compuertas(Lienzo lienzo,int compuerta){
         this.compuerta = BitmapFactory.decodeResource(lienzo.getResources(),compuerta);
-        linea = -1;
         conexion = false;
+        linea = 0;
 
     }
 
@@ -29,16 +29,23 @@ public class Compuertas {
         // 0 = No está en area    1 = Entrada izquierda   2 = Entrada derecha  3 = Salida   4 = Hay una sola entrada (NOT)
 
         if( (y+compuerta.getHeight()/2) <= dedoY && dedoY <= (y+compuerta.getHeight()) ){
-
-            if(puntero == 1){
-                return 4;
-            }
             if( x<=dedoX && dedoX <= (x+compuerta.getWidth()/2) ){
+                if(puntero == 1){
+                    return 4;
+                }
                 return 1;
-            }else return 2;
+            }
+            if( (x+compuerta.getWidth()/2)<dedoX && dedoX<=(x+compuerta.getWidth()) ) {
+                if(puntero == 1){
+                    return 4;
+                }
+                return 2;
+            }
         }
         if( y <= dedoY && dedoY < (y+compuerta.getHeight()/2) ){
-            return 3;
+            if(x<=dedoX && dedoX <=(x+compuerta.getWidth())){
+                return 3;
+            }
         }
         return 0;
     }

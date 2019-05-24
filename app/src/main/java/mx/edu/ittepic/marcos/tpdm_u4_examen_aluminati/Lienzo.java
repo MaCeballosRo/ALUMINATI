@@ -1,15 +1,22 @@
 package mx.edu.ittepic.marcos.tpdm_u4_examen_aluminati;
 
+import android.app.AppComponentFactory;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 public class Lienzo extends View {
-    Compuertas not, or, and, xor, bombillaEncendida,bombillaApagada,botonApagado,botonEncendido, punteroCompuerta, punteroBoton,punteroBombilla;
+    Compuertas not, or, and, xor;
+    Compuertas bombillaEncendida,bombillaApagada,botonApagado,botonEncendido,botonApagado1,botonEncendido1;
+    Compuertas punteroCompuerta, punteroBoton,punteroBoton1, punteroBombilla;
     int nivel;
-    int boton, bombillo;
+    int boton, boton1, bombillo;
     int ancho = this.getResources().getDisplayMetrics().widthPixels;
     int alto = this.getResources().getDisplayMetrics().heightPixels;
     int area, aux,xInicial,yInicial, xFinal, yFinal;
@@ -30,9 +37,17 @@ public class Lienzo extends View {
         bombillaEncendida = new Compuertas(this,R.drawable.bombilla1);
         botonApagado = new Compuertas(this,R.drawable.boton1);
         botonEncendido = new Compuertas (this,R.drawable.boton);
+        botonApagado1 = new Compuertas(this,R.drawable.boton1);
+        botonEncendido1 = new Compuertas (this,R.drawable.boton);
+
         boton = 0;
+        boton1 = 0;
         bombillo = 0;
         resultado = false;
+        aux = 1;
+        punteroBoton = botonApagado;
+        punteroBoton1 = botonApagado1;
+        punteroBombilla = bombillaApagada;
     }
 
     public void setNivel(int nivel){
@@ -42,63 +57,119 @@ public class Lienzo extends View {
     protected void onDraw(Canvas c){
         Paint p = new Paint();
         if(boton == 0){
+            botonApagado.setLinea(punteroBoton.getLinea());
+            botonApagado.setConexion(punteroBoton.getConexion());
             punteroBoton = botonApagado;
+        }else {
+            botonEncendido.setLinea(punteroBoton.getLinea());
+            botonEncendido.setConexion(punteroBoton.getConexion());
+            punteroBoton = botonEncendido;
         }
-        else punteroBoton = botonEncendido;
+
+        if(boton1 == 0){
+            botonApagado1.setLinea(punteroBoton1.getLinea());
+            botonApagado1.setConexion(punteroBoton1.getConexion());
+            punteroBoton1 = botonApagado1;
+        }else{
+            botonEncendido1.setLinea(punteroBoton1.getLinea());
+            botonEncendido1.setConexion(punteroBoton1.getConexion());
+            punteroBoton1 = botonEncendido1;
+        }
 
         if(bombillo == 0){
+            bombillaApagada.setLinea(punteroBombilla.getLinea());
+            bombillaApagada.setConexion(punteroBombilla.getConexion());
             punteroBombilla = bombillaApagada;
-        }else punteroBombilla = bombillaEncendida;
+        }else {
+            bombillaEncendida.setLinea(punteroBombilla.getLinea());
+            bombillaEncendida.setConexion(punteroBombilla.getConexion());
+            punteroBombilla = bombillaEncendida;
+        }
+
+
 
         switch(nivel){
             case 1://nivel 1
-                if(punteroBombilla == bombillaApagada){
-                    punteroBombilla.pintar(c,p,ancho/2-50,115);
+                if(punteroBombilla == bombillaApagada){//diferencia de x de 50
+                    punteroBombilla.pintar(c,p,ancho/2-(bombillaApagada.getWidth())/2,115);
                 }else{
-                    punteroBombilla.pintar(c,p,ancho/2-50,50);
+                    punteroBombilla.pintar(c,p,ancho/2-((bombillaApagada.getWidth())/2)-50,50);
                 }
 
-                not.pintar(c,p,ancho/2-50,alto/3);
-                punteroBoton.pintar(c,p,ancho/2-50,2*alto/3);
+                not.pintar(c,p,ancho/2-(not.getWidth())/2,alto/3);
+                punteroBoton.pintar(c,p,ancho/2-(punteroBoton.getWidth())/2,2*alto/3);
                 punteroCompuerta = not;
 
-                for(int i = 0; i<aux; i++){
+                for(int i = 1; i<aux; i++){
                     lineas[i].Dibujar(c,p);
                 }
                 break;
+
             case 2: //nivel 2
-<<<<<<< HEAD
-                bombillaApagada.pintar(c,p,ancho/2-50,115);
-                and.pintar(c,p,ancho/2-50,alto/3);
-                punteroBoton.pintar(c,p,ancho/2-50,2*alto/3);
+                if(punteroBombilla == bombillaApagada){//diferencia de x de 50
+                    punteroBombilla.pintar(c,p,ancho/2-(bombillaApagada.getWidth())/2,115);
+                }else{
+                    punteroBombilla.pintar(c,p,ancho/2-((bombillaApagada.getWidth())/2)-50,50);
+                }
+                and.pintar(c,p,ancho/2-(not.getWidth())/2,alto/3);
+                punteroBoton.pintar(c,p,ancho/3-(punteroBoton.getWidth())/2,2*alto/3);
+                punteroBoton1.pintar(c,p,2*ancho/3-(punteroBoton1.getWidth())/2,2*alto/3);
                 punteroCompuerta = and;
-                punteroBombilla = bombillaEncendida;
+
+                for(int i = 1; i<aux; i++){
+                    lineas[i].Dibujar(c,p);
+                }
 
                 break;
+
             case 3://nivel 3
-                bombillaApagada.pintar(c,p,ancho/2-50,115);
-                or.pintar(c,p,ancho/2-50,alto/3);
-                punteroBoton.pintar(c,p,ancho/2-50,2*alto/3);
+                if(punteroBombilla == bombillaApagada){//diferencia de x de 50
+                    punteroBombilla.pintar(c,p,ancho/2-(bombillaApagada.getWidth())/2,115);
+                }else{
+                    punteroBombilla.pintar(c,p,ancho/2-((bombillaApagada.getWidth())/2)-50,50);
+                }
+                or.pintar(c,p,ancho/2-(not.getWidth())/2,alto/3);
+                punteroBoton.pintar(c,p,ancho/3-(punteroBoton.getWidth())/2,2*alto/3);
+                punteroBoton1.pintar(c,p,2*ancho/3-(punteroBoton1.getWidth())/2,2*alto/3);
                 punteroCompuerta = or;
-                punteroBombilla = bombillaEncendida;
+
+                for(int i = 1; i<aux; i++){
+                    lineas[i].Dibujar(c,p);
+                }
                 break;
             case 4: //nivel 4
-                bombillaApagada.pintar(c,p,ancho/2-50,115);
-                xor.pintar(c,p,ancho/2-50,alto/3);
-                punteroBoton.pintar(c,p,ancho/2-50,2*alto/3);
+                if(punteroBombilla == bombillaApagada){//diferencia de x de 50
+                    punteroBombilla.pintar(c,p,ancho/2-(bombillaApagada.getWidth())/2,115);
+                }else{
+                    punteroBombilla.pintar(c,p,ancho/2-((bombillaApagada.getWidth())/2)-50,50);
+                }
+                xor.pintar(c,p,ancho/2-(not.getWidth())/2,alto/3);
+                punteroBoton.pintar(c,p,ancho/3-(punteroBoton.getWidth())/2,2*alto/3);
+                punteroBoton1.pintar(c,p,2*ancho/3-(punteroBoton1.getWidth())/2,2*alto/3);
                 punteroCompuerta = xor;
-                punteroBombilla = bombillaEncendida;
-=======
+
+                for(int i = 1; i<aux; i++){
+                    lineas[i].Dibujar(c,p);
+                }
+
                 break;
-            case 3://nivel 3
-                break;
-            case 4: //nivel 4
->>>>>>> 7a35764fc07b0d95f973ab59de0adc257ed70f83
-                break;
-            case 5: //nivel 4
+
+            case 5: //nivel 5
                 break;
 
         }
+
+        p.setColor(Color.GRAY);
+        c.drawRect(0, 0, 270, 70, p);
+        p.setColor(Color.BLACK);
+        p.setTextSize(60);
+        c.drawText("Siguiente", 10, 50, p);
+
+        p.setColor(Color.GRAY);
+        c.drawRect(0, 80, 160, 150, p);
+        p.setColor(Color.BLACK);
+        p.setTextSize(60);
+        c.drawText("Atrás", 10, 130, p);
     }
 
     public boolean onTouchEvent(MotionEvent me){
@@ -114,10 +185,17 @@ public class Lienzo extends View {
                     coordenadas1 = coordenadaSalida(punteroBoton);
                     origen ="boton";
                 }
+
+                if(punteroBoton1.estaEnArea(posx,posy,punteroAux)!=0){
+                    coordenadas1 = coordenadaSalida(punteroBoton1);
+                    origen ="boton1";
+                }
+
                 if(punteroCompuerta.estaEnArea(posx,posy,punteroAux)==3){
                     coordenadas1 = coordenadaSalida(punteroCompuerta);
                     origen = "compuerta";
                 }
+
                 if(coordenadas1!=null){
                     xInicial = coordenadas1[0];
                     yInicial = coordenadas[1];
@@ -127,29 +205,49 @@ public class Lienzo extends View {
 
                 break;
             case MotionEvent.ACTION_UP:
+
+
                 if(punteroCompuerta == not){
                     punteroAux = 1;
                 }
+
                 if(punteroBoton.estaEnArea(posx,posy,punteroAux)!=0){
+
                     if(punteroBoton == botonEncendido){
                         boton = 0;
-                        if(punteroBoton.getLinea()!=-1){
+                        if(punteroBoton.getLinea()!=0){
                             lineas[punteroBoton.getLinea()].setValor(false);
                         }
                     }else {
                         boton = 1;
-                        if(punteroBoton.getLinea()!=-1){
+                        if(punteroBoton.getLinea()!=0){
                             lineas[punteroBoton.getLinea()].setValor(true);
 
                         }
                     }
-                    if(punteroCompuerta.getLinea()!=-1){
-                        prenderBombillo();
-                    }
 
+                    prenderBombillo();
                 }
+
+                if(punteroBoton1.estaEnArea(posx,posy,punteroAux)!=0){
+
+                    if(punteroBoton1 == botonEncendido1){
+                        boton1 = 0;
+                        if(punteroBoton1.getLinea()!=0){
+                            lineas[punteroBoton1.getLinea()].setValor(false);
+                        }
+                    }else {
+                        boton1 = 1;
+                        if(punteroBoton1.getLinea()!=0){
+                            lineas[punteroBoton1.getLinea()].setValor(true);
+
+                        }
+                    }
+                    prenderBombillo();
+                }
+
                 area = punteroCompuerta.estaEnArea(posx,posy,punteroAux);
-                if(area!=0 && origen.equals("boton")){
+                if(area!=0 && (origen.equals("boton") || origen.equals("boton1"))){
                     if(area == 4){
                         coordenadas1 = coordenada1Entrada(punteroCompuerta);
                         destino = "1entrada";
@@ -169,7 +267,6 @@ public class Lienzo extends View {
                 if(coordenadas1 != null){
                     xFinal = coordenadas1[0];
                     yFinal = coordenadas1[1];
-
                     if(origen.equals("boton")){
                         if(!punteroBoton.getConexion()){
                             lineas[aux]= new Linea(xInicial,yInicial,xFinal,yFinal);
@@ -180,35 +277,122 @@ public class Lienzo extends View {
                             }else{
                                 lineas[aux].setValor(true);
                             }
-                            prenderBombillo();
                             aux++;
                         }
+                        prenderBombillo();
                     }
+
+                    if(origen.equals("boton1")){
+                        if(!punteroBoton1.getConexion()){
+                            lineas[aux]= new Linea(xInicial,yInicial,xFinal,yFinal);
+                            punteroBoton1.setLinea(aux);
+                            punteroBoton1.setConexion(true);
+                            if(punteroBoton1==botonApagado1){
+                                lineas[aux].setValor(false);
+                            }else{
+                                lineas[aux].setValor(true);
+                            }
+                            aux++;
+                        }
+                        prenderBombillo();
+                    }
+
                     if(destino.equals("bombilla")){
                         if(!punteroBombilla.getConexion()){
                             lineas[aux]= new Linea(xInicial,yInicial,xFinal,yFinal);
                             punteroBombilla.setLinea(aux);
                             punteroBombilla.setConexion(true);
+
                             prenderBombillo();
                             //lineas[aux].setValor(prenderBombillo());
                             aux++;
                         }
+
                     }
                     origen.equals("");
                     destino.equals("");
                 }
-
+                siguiente(posx,posy);
+                anterior(posx,posy);
                 break;
         }
         invalidate();
+
+
         return true;
     }
 
-    private void prenderBombillo(){
-        if(punteroBombilla.getLinea()!=-1){
-            resultado = punteroBombilla.resultadoNot(lineas[punteroBoton.getLinea()].getValor());
-        }
+    private void siguiente(int posx, int posy){
+        if(0<=posx && posx<=270){
+            if(0<=posy && posy <=70){
+                bombillaApagada = new Compuertas(this,R.drawable.bombilla2);
+                bombillaEncendida = new Compuertas(this,R.drawable.bombilla1);
+                botonApagado = new Compuertas(this,R.drawable.boton1);
+                botonEncendido = new Compuertas (this,R.drawable.boton);
+                botonApagado1 = new Compuertas(this,R.drawable.boton1);
+                botonEncendido1 = new Compuertas (this,R.drawable.boton);
 
+                boton = 0;
+                boton1 = 0;
+                bombillo = 0;
+                resultado = false;
+                aux = 1;
+                punteroBoton = botonApagado;
+                punteroBoton1 = botonApagado1;
+                punteroBombilla = bombillaApagada;
+                if(nivel<4){
+                    nivel++;
+                }
+            }
+        }
+    }
+
+    private void anterior(int posx,int posy){
+        if(0<=posx && posx<=160){
+            if(80<=posy && posy <=150){
+                bombillaApagada = new Compuertas(this,R.drawable.bombilla2);
+                bombillaEncendida = new Compuertas(this,R.drawable.bombilla1);
+                botonApagado = new Compuertas(this,R.drawable.boton1);
+                botonEncendido = new Compuertas (this,R.drawable.boton);
+                botonApagado1 = new Compuertas(this,R.drawable.boton1);
+                botonEncendido1 = new Compuertas (this,R.drawable.boton);
+
+                boton = 0;
+                boton1 = 0;
+                bombillo = 0;
+                resultado = false;
+                aux = 1;
+                punteroBoton = botonApagado;
+                punteroBoton1 = botonApagado1;
+                punteroBombilla = bombillaApagada;
+                if(nivel>1){
+                    nivel--;
+                }
+            }
+        }
+    }
+
+    private void prenderBombillo(){
+        //Toast.makeText(getContext(),"Boton: "+punteroBombilla.getLinea(),Toast.LENGTH_SHORT).show();
+
+        if(punteroBombilla.getLinea()!=0){
+            if(punteroCompuerta==not && punteroBoton.getLinea()!=0){
+                    resultado = punteroBombilla.resultadoNot(lineas[punteroBoton.getLinea()].getValor());
+            }
+            if(punteroBoton.getLinea()!=0 && punteroBoton1.getLinea()!=0) {
+                if(punteroCompuerta==and){
+                    resultado = punteroBombilla.resultadoAnd(lineas[punteroBoton.getLinea()].getValor(),lineas[punteroBoton1.getLinea()].getValor());
+                }
+                if(punteroCompuerta==or){
+                    resultado = punteroBombilla.resultadoOr(lineas[punteroBoton.getLinea()].getValor(),lineas[punteroBoton1.getLinea()].getValor());
+                }
+
+                if(punteroCompuerta==xor){
+                    resultado = punteroBombilla.resultadoXor(lineas[punteroBoton.getLinea()].getValor(),lineas[punteroBoton1.getLinea()].getValor());
+                }
+
+            }
+        }
         if(resultado){
             bombillo = 1;
         }else{
