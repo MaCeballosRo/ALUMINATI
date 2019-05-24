@@ -3,6 +3,8 @@ package mx.edu.ittepic.marcos.tpdm_u4_examen_aluminati;
 import android.content.Intent;
 
 
+
+
 import android.support.v7.app.AlertDialog;
 
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +22,9 @@ public class Introduccion extends AppCompatActivity {
 
 
 
+
+
+
         and = findViewById(R.id.idand);
         or = findViewById(R.id.idor);
         not = findViewById(R.id.idnot);
@@ -31,7 +36,6 @@ public class Introduccion extends AppCompatActivity {
             public void onClick(View v) {
 
 
-
                 mensaje("COMPUERTA AND"," 0 | 0 = 0 \n 0 | 1 = 0 \n 1 | 0 = 0 \n 1 | 1 = 1");
 
             }
@@ -40,8 +44,6 @@ public class Introduccion extends AppCompatActivity {
         or.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
 
                 mensaje("COMPUERTA OR"," 0 | 0 = 0 \n 0 | 1 = 1 \n 1 | 0 = 1 \n 1 | 1 = 1");
 
@@ -52,7 +54,6 @@ public class Introduccion extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
                 mensaje("COMPUERTA NOT"," 0 ~ 1 \n 1 ~ 0");
 
             }
@@ -61,7 +62,6 @@ public class Introduccion extends AppCompatActivity {
         xor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
 
 
                 mensaje("COMPUERTA XOR"," 0 | 0 = 0 \n 0 | 1 = 1 \n 1 | 0 = 1 \n 1 | 1 = 0");
@@ -77,6 +77,8 @@ public class Introduccion extends AppCompatActivity {
 
                 //finish();
 
+
+
                 finish();
 
             }
@@ -84,8 +86,15 @@ public class Introduccion extends AppCompatActivity {
     }
 
 
+
     private void mensaje(String titulo, String Mensaje) {
         AlertDialog.Builder a=new AlertDialog.Builder(this);
         a.setTitle(titulo).setMessage(Mensaje).setPositiveButton("Aceptar",null).show();
+
+
+
+
+
+
     }
 }

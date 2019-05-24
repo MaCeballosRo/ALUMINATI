@@ -169,7 +169,7 @@ public class Lienzo extends View {
         c.drawRect(0, 80, 160, 150, p);
         p.setColor(Color.BLACK);
         p.setTextSize(60);
-        c.drawText("Atrás", 10, 130, p);
+        c.drawText("AtrÃ¡s", 10, 130, p);
     }
 
     public boolean onTouchEvent(MotionEvent me){
@@ -377,7 +377,7 @@ public class Lienzo extends View {
 
         if(punteroBombilla.getLinea()!=0){
             if(punteroCompuerta==not && punteroBoton.getLinea()!=0){
-                    resultado = punteroBombilla.resultadoNot(lineas[punteroBoton.getLinea()].getValor());
+                resultado = punteroBombilla.resultadoNot(lineas[punteroBoton.getLinea()].getValor());
             }
             if(punteroBoton.getLinea()!=0 && punteroBoton1.getLinea()!=0) {
                 if(punteroCompuerta==and){
@@ -431,3 +431,4 @@ public class Lienzo extends View {
         return coordenadas;
     }
 }
+
